@@ -1,0 +1,23 @@
+缓存：
+请求头加 Cache-Control:max-age:3600
+Etag:ABC
+
+协商缓存：
+if-none-matched:ABC  状态码：200  304
+
+HTTPS和HTTP的区别？
+HTTPS 是加密传输，HTTP是明文传输
+HTTPS端口是443   HTTP端口是80
+HTTPS较慢，HTTP较快
+HTTPS需要购买证书。
+
+三次握手
+SYN
+ACK  SYN
+ACK SYN
+
+四次挥手
+FIN
+ACK 
+FIN
+ACK

@@ -37,7 +37,7 @@ const throttle = (fn, delay) => {
   let canUse = true;
   return function () {
     if (canUse) {
-      fn.apply(this,arguments)
+      fn.apply(this, arguments);
       canUse = false;
       setTimeout(() => {
         canUse = true;
@@ -45,3 +45,67 @@ const throttle = (fn, delay) => {
     }
   };
 };
+
+// 继承
+class Animal{
+  constructor(color){
+      this.color = color
+  }
+  move(){}
+}
+class Dog extends Animal{
+  constructor(color, name){
+      super(color)
+      this.name = name
+  }
+  say(){}
+}
+// promise.all
+Promise.myAll = function (list) {
+  const results = [];
+  let count = 0;
+  return new Promise((resolve, reject) => {
+    list.map((item, index) => {
+      item.then(
+        (result) => {
+          results[index] = result;
+          count += 1;
+          if (count >= list.length) {
+            resolve(results);
+          }
+        },
+        (reason) => reject(reason)
+      );
+    });
+  });
+};
+// eventHub
+const eventHub = {
+  map: {
+    // click: [f1 , f2]
+  },
+  on: (name, fn)=>{
+    eventHub.map[name] = eventHub.map[name] || []
+    eventHub.map[name].push(fn)
+  },
+  emit: (name, data)=>{
+    const q = eventHub.map[name]
+    if(!q) return
+    q.map(f => f.call(null, data))
+    return undefined
+  },  
+  off: (name, fn)=>{
+    const q = eventHub.map[name]
+    if(!q){ return }
+    const index = q.indexOf(fn)
+    if(index < 0) { return }
+    q.splice(index, 1)
+  }
+}
+
+eventHub.on('click', console.log)
+eventHub.on('click', console.error)
+
+setTimeout(()=>{
+  eventHub.emit('click', 'frank')
+},3000)
